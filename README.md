@@ -20,10 +20,10 @@ A real-time chat application with file upload capabilities built with Node.js, E
 
 1. Clone the repository:
 
-bash
-git clone <repository-url>
+```bash
+git clone https://github.com/prasanth-sasuke/chat_app_assessment.git
 cd <project-directory>
-
+```
 
 2. Install dependencies:
 bash
