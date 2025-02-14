@@ -1,0 +1,7 @@
+# Upload directories
+uploads/*
+uploads/temp/*
+uploads/processed/*
+!uploads/.gitkeep
+!uploads/temp/.gitkeep
+!uploads/processed/.gitkeep 
