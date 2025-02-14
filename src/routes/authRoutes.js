@@ -2,7 +2,14 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 const { authenticate } = require('../middlewares/authMiddleware');
-const { validateRegistration, validateLogin } = require('../middlewares/validation');
+const { 
+  // Choose either express-validator or Joi validation
+  validateRegistration, // express-validator
+  validateLoginFields,  // express-validator
+  // OR
+  validateRegister,     // Joi
+  validateLogin        // Joi
+} = require('../middlewares/validation');
 
 /**
  * @swagger
@@ -112,7 +119,7 @@ const { validateRegistration, validateLogin } = require('../middlewares/validati
 
 // Authentication Routes
 router.post('/register', validateRegistration, authController.register);
-router.post('/login', validateLogin, authController.login);
+router.post('/login', validateLoginFields, authController.login);
 router.post('/logout', authenticate, authController.logout);
 router.get('/me', authenticate, authController.getCurrentUser);
 router.put('/update-profile', authenticate, authController.updateProfile);

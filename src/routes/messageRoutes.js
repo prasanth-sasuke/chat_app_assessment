@@ -2,15 +2,20 @@ const express = require('express');
 const router = express.Router();
 const messageController = require('../controllers/messageController');
 const { authenticate } = require('../middlewares/authMiddleware');
-const { validateMessage } = require('../middlewares/validation');
+const { 
+  // Choose either express-validator or Joi validation
+  validateMessageFields, // express-validator
+  // OR
+  validateMessage      // Joi
+} = require('../middlewares/validation');
 
 // Message Routes
-router.post('/', authenticate, validateMessage, messageController.sendMessage);
+router.post('/', authenticate, validateMessageFields, messageController.sendMessage);
 router.get('/', authenticate, messageController.getMessages);
 router.get('/history', authenticate, messageController.getMessageHistory);
 router.get('/search', authenticate, messageController.searchMessages);
 router.delete('/:messageId', authenticate, messageController.deleteMessage);
-router.put('/:messageId', authenticate, validateMessage, messageController.editMessage);
+router.put('/:messageId', authenticate, validateMessageFields, messageController.editMessage);
 
 /**
  * @swagger

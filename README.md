@@ -22,8 +22,8 @@ A real-time chat application with file upload capabilities built with Node.js, E
 
 ```bash
 git clone https://github.com/prasanth-sasuke/chat_app_assessment.git
-cd <project-directory>
 ```
+cd <project-directory>
 
 2. Install dependencies:<br>
 ```bash
@@ -51,13 +51,7 @@ sql.
 CREATE DATABASE chat_app;
 ```
 
-5. Run migrations:
-```bash
-npm run migrate
-```
-
-
-6. Start the server:
+5. Start the server:
 ```bash
 npm start
 ```

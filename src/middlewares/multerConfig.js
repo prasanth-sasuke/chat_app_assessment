@@ -18,7 +18,7 @@ const ALLOWED_FILE_TYPES = {
 // Configure storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadDir = path.join(process.cwd(), 'uploads', 'temp');
+    const uploadDir = path.join(process.cwd(), process.env.UPLOAD_DIR || 'uploads', 'temp');
     cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
@@ -28,22 +28,19 @@ const storage = multer.diskStorage({
   }
 });
 
-// File filter function
-const fileFilter = (req, file, cb) => {
-  if (ALLOWED_FILE_TYPES[file.mimetype]) {
-    cb(null, true);
-  } else {
-    cb(new Error(`Invalid file type. Allowed types: ${Object.values(ALLOWED_FILE_TYPES).join(', ')}`), false);
-  }
-};
-
 // Configure multer
 const upload = multer({
   storage: storage,
-  fileFilter: fileFilter,
+  fileFilter: (req, file, cb) => {
+    if (ALLOWED_FILE_TYPES[file.mimetype]) {
+      cb(null, true);
+    } else {
+      cb(new Error(`Invalid file type. Allowed types: ${Object.values(ALLOWED_FILE_TYPES).join(', ')}`), false);
+    }
+  },
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB limit
-    files: 5 // Maximum 5 files at once
+    fileSize: parseInt(process.env.MAX_FILE_SIZE) || 5 * 1024 * 1024, // Default 5MB
+    files: parseInt(process.env.MAX_FILES) || 5 // Default 5 files
   }
 });
 
@@ -53,13 +50,13 @@ const handleMulterError = (err, req, res, next) => {
     if (err.code === 'LIMIT_FILE_SIZE') {
       return res.status(400).json({
         success: false,
-        error: 'File size too large. Maximum size is 5MB'
+        error: `File size too large. Maximum size is ${process.env.MAX_FILE_SIZE / (1024 * 1024)}MB`
       });
     }
     if (err.code === 'LIMIT_FILE_COUNT') {
       return res.status(400).json({
         success: false,
-        error: 'Too many files. Maximum is 5 files'
+        error: `Too many files. Maximum is ${process.env.MAX_FILES} files`
       });
     }
   }
