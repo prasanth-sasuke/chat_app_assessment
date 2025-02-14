@@ -25,13 +25,14 @@ git clone https://github.com/prasanth-sasuke/chat_app_assessment.git
 cd <project-directory>
 ```
 
-2. Install dependencies:
-bash
+2. Install dependencies:<br>
+```bash
 npm install
+```
 
-
-3. Set up environment variables:
-env
+3. Set up environment variables:<br>
+env<br>
+```bash
 PORT=3000
 DB_HOST=localhost
 DB_USER=postgres
@@ -41,20 +42,25 @@ JWT_SECRET=your_jwt_secret
 REDIS_HOST=localhost
 REDIS_PORT=6379
 
-4. Create database:
-sql
-CREATE DATABASE chat_app;
+```
 
+4. Create database:<br>
+
+sql.
+```bash
+CREATE DATABASE chat_app;
+```
 
 5. Run migrations:
-bash
+```bash
 npm run migrate
+```
 
 
 6. Start the server:
-bash
+```bash
 npm start
-
+```
 
 ## API Documentation
 
